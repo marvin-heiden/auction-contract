@@ -175,12 +175,15 @@ contract Auction {
             withdrawalAmount = fundsByBidder[withdrawalAccount];
 
         } else if (block.number >= endBlock){ // auction terminated
-            if (msg.sender == owner && 
-            block.number >= endBlock + locktime && 
-            complaintFiled == false) {
-                withdrawalAccount = highestBidder;
-                withdrawalAmount = highestBid;
-                paymentFulfilled = true;
+            if (msg.sender == owner ) {
+                if (block.number >= endBlock + locktime && 
+                    complaintFiled == false) {
+                    withdrawalAccount = highestBidder;
+                    withdrawalAmount = highestBid;
+                    paymentFulfilled = true;
+                } else {
+                    withdrawalAmount = 0;
+                }
 
             } else if (msg.sender == highestBidder) {
                 if (complaintConfirmed == true){
